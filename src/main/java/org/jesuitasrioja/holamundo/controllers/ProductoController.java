@@ -3,7 +3,10 @@ package org.jesuitasrioja.holamundo.controllers;
 import java.util.List;
 
 import org.jesuitasrioja.holamundo.modelo.Producto;
+import org.jesuitasrioja.holamundo.repository.IProductosRepository;
+import org.jesuitasrioja.holamundo.repository.IProductosRepository;
 import org.jesuitasrioja.holamundo.repository.ProductosRepository;
+import org.jesuitasrioja.holamundo.repository.ProductosRepositoryMongoDB;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,42 +20,35 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST})
-public class ProductoController implements IProductosRepository {
+public class ProductoController {
 
-	private ProductosRepository pr = new ProductosRepository();
+	private IProductosRepository pr = new ProductosRepositoryMongoDB();
 
-	@Override
 	@GetMapping("/productos")
 	public List<Producto> allProducts() {
-
 		return pr.getAll();
 	}
 
-	@Override
 	@GetMapping("/producto/{id}")
 	public Producto getProducto(@PathVariable String id) {
 		return pr.getById(id);
 	}
 
-	@Override
 	@GetMapping("/producto")
 	public Producto getProducto2(@RequestParam String id) {
 		return pr.getById(id);
 	}
 
-	@Override
 	@PostMapping("/producto")
 	public String postProducto(@RequestBody Producto nuevoProducto) {
 		return String.valueOf(pr.aniadirProducto(nuevoProducto));
 	}
 
-	@Override
 	@PutMapping("/producto")
 	public String putProducto(@RequestBody Producto editadoProducto) {
 		return null;
 	}
 
-	@Override
 	@DeleteMapping("/producto/{id}")
 	public String deleteProducto(@PathVariable String id) {
 		return String.valueOf(pr.eliminarProducto(id));
