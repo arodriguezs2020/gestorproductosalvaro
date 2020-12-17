@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST})
 public class ProductoController {
 
-	private IProductosRepository pr = new ProductosRepositoryMongoDB();
+	private IProductosRepository pr = new ProductosRepository();
 
 	@GetMapping("/productos")
 	public List<Producto> allProducts() {

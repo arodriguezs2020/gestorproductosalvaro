@@ -1,5 +1,6 @@
 package org.jesuitasrioja.holamundo.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
@@ -7,6 +8,7 @@ import org.jesuitasrioja.holamundo.modelo.Producto;
 
 import com.google.gson.Gson;
 import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
@@ -45,7 +47,16 @@ public class ProductosRepositoryMongoDB implements IProductosRepository {
 	@Override
 	public List<Producto> getAll() {
 		
-		return null;
+		List<Producto> listaProductos = new ArrayList<Producto>();
+		
+		FindIterable<Document> listaDocumentos = collection.find();
+    	
+    	for (Document document : listaDocumentos) {
+    		
+    		Producto producto = document2Producto(document);	
+    		listaProductos.add(producto);
+		}
+		return listaProductos;
 	}
 
 	@Override
